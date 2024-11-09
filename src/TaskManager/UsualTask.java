@@ -1,15 +1,15 @@
 package TaskManager;
 
-public class SubTask extends Task {
-
+public class UsualTask extends Task{
     private final int id;
-    public SubTask(String name, String annotation) {
+
+    public UsualTask(String name, String annotation) {
 
         this.name = name;
         this.annotation = annotation;
-        this.status = Status.NEW;
         this.id = Task.x;
         Task.x++;
+        this.status = Status.NEW;
     }
 
     public void changeStatus(Status status){
@@ -20,10 +20,8 @@ public class SubTask extends Task {
         return id;
     }
 
-    public void changeName(SubTask subTask) {
-        this.name = subTask.name;
-        this.annotation = subTask.annotation;
+    public void changeName(UsualTask usualTask) {
+        this.name = usualTask.name;
+        this.annotation = usualTask.annotation;
     }
-
-
 }

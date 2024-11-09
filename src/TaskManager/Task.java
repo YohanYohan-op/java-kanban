@@ -1,84 +1,53 @@
 package TaskManager;
 
-import java.util.HashMap;
-import java.util.ArrayList;
+import java.util.Objects;
 
 public class Task {
-    private HashMap<EpicTask, ArrayList<SubTask>> task = new HashMap<>();
+
+    String name;
+    String annotation;
+    Status status;
+    static Integer x = 1;
+    int id;
+
+    public int getId() {
+        return id;
+    }
 
 
+    @Override
+    public boolean equals(Object o) { // метод equals переопределён
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SubTask subTask = (SubTask) o;
+        return Objects.equals(name, subTask.name) &&
+                Objects.equals(annotation, subTask.annotation) &&
+                Objects.equals(status, subTask.status);
 
-    public void setEpicTask(EpicTask epicTask) {
-        for (EpicTask search : task.keySet()) {
-            if (epicTask.equals(search)){
-                System.out.println("zadacha yzhe sozdana");
-            } else {
-                task.put(epicTask, new ArrayList<>());
-            }
+    }
+
+    @Override // не забываем об аннотации
+    public int hashCode() {
+        int hash = 17; // объявляем и инициализируем переменную hash
+        if (name != null) { // проверяем значение первого поля
+            hash = name.hashCode(); // вычисляем хеш первого поля
         }
-    }
-
-    public void setSubTask(EpicTask epicTask, SubTask subTask) {
-
-        for (EpicTask search : task.keySet()) {
-            if (epicTask.equals(search)){
-                ArrayList<SubTask> subTasks = task.get(epicTask);
-                subTasks.add(subTask);
-                task.put(epicTask,subTasks);
-            } else {
-                System.out.println("Чтобы добавить подзадачу - добавьте сначала задачу");
-            }
+        if (annotation != null) { // проверяем значение второго поля
+            hash = hash + annotation.hashCode(); // вычисляем хеш второго поля и общий хеш
         }
-    }
-
-
-
-    public void clearSubTasks(EpicTask epicTask, SubTask subTask){
-        for (EpicTask search : task.keySet()) {
-            if (epicTask.equals(search)){
-                ArrayList<SubTask> subTasks = task.get(epicTask);
-                for (SubTask task1 : subTasks) {
-                    if(task1.equals(subTask)){
-                        subTasks.remove(subTask);
-                        task.put(epicTask, subTasks);
-                    } else {
-                        System.out.println("Subtaska ne naedena");
-                    }
-                }
-            } else {
-                System.out.println("EpicTask ne naeden");
-            }
+        if (status != null) { // проверяем значение второго поля
+            hash = hash + status.hashCode(); // вычисляем хеш второго поля и общий хеш
         }
-        //метод удаления субтасков в епике
-        //
+
+
+        return hash; // возвращаем хеш
     }
 
-    public void deleteEpicTask (EpicTask epicTask){
-        for (EpicTask search : task.keySet()) {
-            if (epicTask.equals(search)){
-                task.remove(epicTask);
-            } else {
-                System.out.println("EpicTaski ne naedeno");
-            }
-        }
-        //метод удаления Епика
-        //Перебор ключей, находим нужный и удаляем
+    @Override
+    public String toString() {
+        return "Задача {" +
+                "name='" + name + '\'' +
+                ", annotation='" + annotation + '\'' +
+                ", status='"+status +'}';
     }
-
-    public void updateEpicTask(EpicTask epicTask){
-        //найти и заменить, добавить логику проверку сабтасков на статус
-    }
-
-    public void updateSubTask(SubTask subTask){
-        //найти и заменить
-    }
-
-    // возможно на каждый статус добавить по методу на изменение статуса задач
-
-    // метод удаления всех эпиков
-
-    //метод удаления всех саб тасков
-
-    //метод удаления
-
 }
