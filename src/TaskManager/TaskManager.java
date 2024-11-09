@@ -42,40 +42,42 @@ public class TaskManager {
     }
 
     public void setUsualTask(UsualTask usualTask) {
-
-        idSearch.add(usualTask);
-        usualTasks.add(usualTask);
+        if (!usualTasks.contains(usualTask)) {
+            idSearch.add(usualTask);
+            usualTasks.add(usualTask);
+        } else {
+            System.out.println("zadacha postavlena");
+        }
 
     }
 
 
-    public void deleteSubTask(EpicTask epicTask, SubTask subTask) {
+    public void deleteSubTask(SubTask subTask) {
 
-        for (EpicTask search : task.keySet()){
-            if (search.getId() == epicTask.getId()) {
-                ArrayList<SubTask> subTasks = task.get(search);
-                for (SubTask task1 : subTasks) {
-                    if (task1.getId()==subTask.getId()) {
-                        subTasks.remove(subTask);
-                        Task.x--;
-                        task.put(epicTask, subTasks);
+        for (ArrayList<SubTask> search : task.values()){
+                for (int i = 0; i < search.size(); i++) {
+                    if (search.get(i).getId() == subTask.getId()) {
+                        for (int j = 0; j < idSearch.size(); j++) {
+                            if(idSearch.get(j).getId() == subTask.getId()){
+                                idSearch.remove(subTask);
+                            }
+                        }
+                        search.remove(subTask);
                     }
                 }
-            }
         }
 
     }
 
     public void deleteUsualTask(UsualTask usualTask){
-        for (UsualTask task : usualTasks) {
-            if (task.getId() == usualTask.getId()){
-                for (Task deleteID : idSearch) {
-                    if (deleteID.getId()== task.getId()) {
-                        idSearch.remove(deleteID);
+        for (int i = 0; i < usualTasks.size(); i++) {
+            if (usualTasks.get(i).getId() == usualTask.getId()){
+                for (int j = 0; j < idSearch.size(); j++) {
+                    if(idSearch.get(j).getId() == usualTask.getId()){
+                        idSearch.remove(usualTask);
                     }
                 }
-                usualTasks.remove(task);
-                Task.x--;
+                usualTasks.remove(usualTask);
             }
 
         }
@@ -84,24 +86,17 @@ public class TaskManager {
     public void deleteEpicTask(EpicTask epicTask) {
 
         for(EpicTask search : task.keySet()){
-            if (search.getId()==epicTask.getId()) {
-                for (Task deleteID : idSearch) {
-                    if (deleteID.getId() == epicTask.getId()) {
-                        idSearch.remove(deleteID);
+            if (search.getId() == epicTask.getId()) {
+
+                for (int j = 0; j < idSearch.size(); j++) {
+                    if(idSearch.get(j).getId() == epicTask.getId()){
+                        idSearch.remove(epicTask);
                     }
                 }
-                ArrayList<SubTask> subTasks = task.get(epicTask);
-                for (SubTask delete : subTasks) {
-                    subTasks.remove(delete);
-                    Task.x--;
-                }
-                task.remove(epicTask);
-                Task.x--;
+
+                task.remove(search);
             }
         }
-
-
-
     }
 
     public void updateEpicTask(int id, EpicTask epicTask) {
@@ -110,79 +105,58 @@ public class TaskManager {
                 change.changeName(epicTask);
             }
         }
-        Task.x--;
     }
 
     public void updateSubTask(int id, SubTask subTask) {
-        for (EpicTask epicTask : task.keySet()) {
-            ArrayList<SubTask> subTasks = task.get(epicTask);
-            for (SubTask change : subTasks) {
-                if (id == change.getId()) {
+        for (ArrayList<SubTask> search : task.values()) {
+            for (SubTask change : search) {
+                if (change.getId() == id) {
                     change.changeName(subTask);
-
                 }
             }
-            task.put(epicTask, subTasks);
-
         }
-        Task.x--;
     }
 
     public void updateUsualTask(int id, UsualTask usualTask) {
         for (UsualTask task : usualTasks) {
             if (id == task.getId()) {
                 task.changeName(usualTask);
-                //найти и заменить
             }
         }
-        Task.x--;
     }
 
     public void deleteAllUsualTask() {
         for (UsualTask task : usualTasks) {
-            for (Task deleteID : idSearch) {
-                if (deleteID.getId()== task.getId()) {
-                    idSearch.remove(deleteID);
+            for (int j = 0; j < idSearch.size(); j++) {
+                if(idSearch.get(j).getId() == task.getId()){
+                    idSearch.remove(task);
                 }
             }
-            usualTasks.remove(task);
-            Task.x--;
         }
+        usualTasks.clear();
     }
 
     public void deleteAllEpicTasks() {
-        for (EpicTask epicTask : task.keySet()) {
-            for (Task deleteID : idSearch) {
-                if (deleteID.getId()==epicTask.getId()) {
-                    idSearch.remove(deleteID);
+        for (EpicTask epicTask : task.keySet()){
+            for (int j = 0; j < idSearch.size(); j++) {
+                if(idSearch.get(j).getId() == epicTask.getId()){
+                    idSearch.remove(epicTask);
                 }
             }
-            ArrayList<SubTask> subTasks = task.get(epicTask);
-            for (SubTask delete : subTasks) {
-                subTasks.remove(delete);
-                Task.x--;
-            }
-            task.remove(epicTask);
-            Task.x--;
-
         }
+        task.clear();
     }
 
     public void deleteAllSubTasks() {
-        for (EpicTask epicTask : task.keySet()) {
-            ArrayList<SubTask> subTasks = task.get(epicTask);
-            for (SubTask delete : subTasks) {
-                for (Task deleteID : idSearch) {
-                    if (deleteID.getId()==delete.getId()) {
-                        idSearch.remove(deleteID);
+        for (ArrayList<SubTask> subTasks : task.values()) {
+            for (SubTask subTask : subTasks){
+                for (int j = 0; j < idSearch.size(); j++) {
+                    if(idSearch.get(j).getId() == subTask.getId()){
+                        idSearch.remove(subTask);
                     }
                 }
-
-                subTasks.remove(delete);
-                Task.x--;
             }
-            task.put(epicTask, subTasks);
-
+            subTasks.clear();
         }
     }
 
@@ -215,7 +189,6 @@ public class TaskManager {
             if (id == search.getId()) {
                 System.out.println(search);
             }
-
         }
     }
 
