@@ -31,9 +31,7 @@ public class Main {
         UsualTask usualTask2 = new UsualTask("wash home", "wash first room");
         taskManager.setUsualTask(usualTask2);
 
-        taskManager.getAllEpicTask();
-        taskManager.getAllSubTasks();
-        taskManager.getAllUsualTask();
+
 
 
 
@@ -42,19 +40,17 @@ public class Main {
         taskManager.updateSubTask(task1.getId(), new SubTask("cherry", "eat cherry"));
 
 
-        taskManager.getPerID(3);
-
-        taskManager.deleteUsualTask(usualTask2);
-        taskManager.deleteEpicTask(epicTask2);
-        taskManager.deleteSubTask(epicTask1, task2);
 
 
+        taskManager.deleteEpicTask(epicTask1);
 
-        taskManager.deleteAllSubTasks();
-        taskManager.deleteAllEpicTasks();
-        taskManager.deleteAllUsualTask();
+        //Привет, вроде все работает кроме этого метода именно с передачей epicTask1 (с epicTask2 все работает),
+        // не могу понять в чем дело
 
-        System.out.println(Task.x);
+
+
+
+
 
 
 

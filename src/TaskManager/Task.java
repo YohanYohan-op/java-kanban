@@ -19,10 +19,10 @@ public class Task {
     public boolean equals(Object o) { // метод equals переопределён
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SubTask subTask = (SubTask) o;
-        return Objects.equals(name, subTask.name) &&
-                Objects.equals(annotation, subTask.annotation) &&
-                Objects.equals(status, subTask.status);
+        Task task = (Task) o;
+        return Objects.equals(name, task.name) &&
+                Objects.equals(annotation, task.annotation) &&
+                Objects.equals(status, task.status);
 
     }
 
@@ -32,9 +32,11 @@ public class Task {
         if (name != null) { // проверяем значение первого поля
             hash = name.hashCode(); // вычисляем хеш первого поля
         }
+        hash = hash * 31;
         if (annotation != null) { // проверяем значение второго поля
             hash = hash + annotation.hashCode(); // вычисляем хеш второго поля и общий хеш
         }
+        hash = hash * 31;
         if (status != null) { // проверяем значение второго поля
             hash = hash + status.hashCode(); // вычисляем хеш второго поля и общий хеш
         }
