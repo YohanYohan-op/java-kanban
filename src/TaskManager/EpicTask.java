@@ -1,5 +1,7 @@
 package TaskManager;
 
+import java.util.Objects;
+
 public class EpicTask extends Task {
 
     private final int id;
@@ -25,4 +27,6 @@ public class EpicTask extends Task {
         this.name = epicTask.name;
         this.annotation = epicTask.annotation;
     }
+
+
 }

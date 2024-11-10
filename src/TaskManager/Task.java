@@ -22,25 +22,22 @@ public class Task {
         Task task = (Task) o;
         return Objects.equals(name, task.name) &&
                 Objects.equals(annotation, task.annotation) &&
-                Objects.equals(status, task.status);
+                Objects.equals(status, task.status) &&
+                Objects.equals(id, task.id);
 
     }
 
     @Override // не забываем об аннотации
     public int hashCode() {
-        int hash = 17; // объявляем и инициализируем переменную hash
-        if (name != null) { // проверяем значение первого поля
-            hash = name.hashCode(); // вычисляем хеш первого поля
+        int hash = 17;
+        if (name != null){
+            hash = hash + name.hashCode();
         }
         hash = hash * 31;
-        if (annotation != null) { // проверяем значение второго поля
-            hash = hash + annotation.hashCode(); // вычисляем хеш второго поля и общий хеш
+        if(annotation != null){
+            hash = hash + annotation.hashCode();
         }
-        hash = hash * 31;
-        if (status != null) { // проверяем значение второго поля
-            hash = hash + status.hashCode(); // вычисляем хеш второго поля и общий хеш
-        }
-
+        hash = hash * id;
 
         return hash; // возвращаем хеш
     }

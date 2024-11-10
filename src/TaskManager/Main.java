@@ -10,8 +10,8 @@ public class Main {
         SubTask task2 = new SubTask("tomato", "the red vegetable");
 
 
-        EpicTask epicTask2 = new EpicTask("build airship", null);
-        SubTask task3 = new SubTask("put Engine", "");
+        EpicTask epicTask2 = new EpicTask("build airship", "null");
+        SubTask task3 = new SubTask("put Engine", "null");
 
 
 
@@ -43,6 +43,7 @@ public class Main {
 
 
         taskManager.deleteEpicTask(epicTask1);
+        taskManager.getPerID(1);
 
         //Привет, вроде все работает кроме этого метода именно с передачей epicTask1 (с epicTask2 все работает),
         // не могу понять в чем дело
