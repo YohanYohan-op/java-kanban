@@ -41,14 +41,13 @@ public class Main {
         taskManager.getEpic(epic.getId());
         taskManager.getTask(task.getId());
         taskManager.getSubtask(subtask.getId());
-        taskManager.getEpicForSubtask(subtask2.getId());
 
-        taskManager.deleteEpicTask(epic1.getId());
+        taskManager.deleteEpic(epic1.getId());
         taskManager.deleteSubTask(subtask2.getId());
         taskManager.deleteTask(task2.getId());
 
         taskManager.updateTask(task);
-        taskManager.updateEpicTask(epic);
+        taskManager.updateEpic(epic);
         taskManager.updateSubTask(subtask);
 
         taskManager.deleteTasks();

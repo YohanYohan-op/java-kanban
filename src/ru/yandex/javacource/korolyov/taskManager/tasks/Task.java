@@ -1,7 +1,5 @@
 package ru.yandex.javacource.korolyov.taskManager.tasks;
 
-import ru.yandex.javacource.korolyov.taskManager.manager.Status;
-
 import java.util.Objects;
 
 public class Task {

@@ -1,4 +1,4 @@
-package ru.yandex.javacource.korolyov.taskManager.manager;
+package ru.yandex.javacource.korolyov.taskManager.tasks;
 
 public enum Status {
     NEW,
