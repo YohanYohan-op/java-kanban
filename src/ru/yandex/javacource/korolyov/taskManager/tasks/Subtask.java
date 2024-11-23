@@ -2,7 +2,7 @@ package ru.yandex.javacource.korolyov.taskManager.tasks;
 
 public class Subtask extends Task {
 
-    private Integer epicId; //Финал я использовал потому, что id с задачей останется навсегда и не вижу ситуаций при которой потребуется замена, но поправил:)
+    private Integer epicId;
 
     public Subtask(String name, String description, Integer epicId) {
         super(name, description);
@@ -13,5 +13,8 @@ public class Subtask extends Task {
         return epicId;
     }
 
+    public void setEpicId(Integer epicId) {
+        this.epicId = epicId;
+    }
 
 }
