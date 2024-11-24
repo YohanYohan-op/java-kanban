@@ -1,9 +1,6 @@
-package manager;
+package ru.yandex.javacource.korolyov.taskmanager.manager;
 
 import org.junit.jupiter.api.Test;
-
-
-import ru.yandex.javacource.korolyov.taskmanager.manager.InMemoryTaskManager;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Epic;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Subtask;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Task;
