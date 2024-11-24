@@ -1,19 +1,22 @@
-package ru.yandex.javacource.korolyov.taskManager.manager;
+package ru.yandex.javacource.korolyov.taskmanager.manager;
 
-import ru.yandex.javacource.korolyov.taskManager.tasks.Epic;
-import ru.yandex.javacource.korolyov.taskManager.tasks.Status;
-import ru.yandex.javacource.korolyov.taskManager.tasks.Subtask;
-import ru.yandex.javacource.korolyov.taskManager.tasks.Task;
+import ru.yandex.javacource.korolyov.taskmanager.tasks.Epic;
+import ru.yandex.javacource.korolyov.taskmanager.tasks.Status;
+import ru.yandex.javacource.korolyov.taskmanager.tasks.Subtask;
+import ru.yandex.javacource.korolyov.taskmanager.tasks.Task;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-public class InMemoryTaskManager implements TaskManagerInt {
+public class InMemoryTaskManager implements TaskManager {
 
-    private HashMap<Integer, Task> tasks = new HashMap<>();
-    private HashMap<Integer, Epic> epics = new HashMap<>();
-    private HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+    private final Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, Epic> epics = new HashMap<>();
+    private final Map<Integer, Subtask> subtasks = new HashMap<>();
+    private final InMemoryHistoryManager historyManager = (InMemoryHistoryManager) Managers.getDefaultHistory();
+    //Не могу понять, почему без явного приведения не работает строка выше
     private int generatorId = 0;
 
 
@@ -79,19 +82,21 @@ public class InMemoryTaskManager implements TaskManagerInt {
     }
 
     @Override
-    public void updateEpic(Epic epic, int id) {
-        Epic savedEpic = epics.get(id);
-        if (savedEpic == null) {
-            return;
+    public void updateEpic(Epic epic, int id) { //Хоть убей не понимаю, почему ты передаешь только один объект
+        final Epic savedEpic = epics.get(id); // Ведь чтобы заменить объект в мапе нужно ведь два значения или я чего то не понял?
+        if (savedEpic == null) { //Вроде логично, что чтобы заменить нужно передать что и на что происходит замена
+            return; // поправь пожалуйста, если не прав
         }
-        savedEpic.setName(epic.getName());
-        savedEpic.setDescription(epic.getDescription());
+        epic.setId(savedEpic.getId());
+        epic.setStatus(savedEpic.getStatus());
+        epic.setAllSubtaskId(savedEpic.getSubtaskIds());
+        epics.put(epic.getId(), epic); //исправил, чтобы обновленная задача сохранялась с новой ссылкой, чтобы в истории осталась старая
     }
 
     @Override
     public void updateSubTask(Subtask subtask, int id) {
-        //int id = subtask.getId();
-        Subtask savedSubtask = subtasks.get(id);
+
+        final Subtask savedSubtask = subtasks.get(id);
         if (savedSubtask == null) {
             return;
         }
@@ -100,21 +105,24 @@ public class InMemoryTaskManager implements TaskManagerInt {
         if (epic == null) {
             return;
         }
-
-        savedSubtask.setName(subtask.getName());
-        savedSubtask.setDescription(subtask.getDescription());
+        subtask.setId(savedSubtask.getId());
+        subtask.setStatus(savedSubtask.getStatus());
+        subtask.setEpicId(savedSubtask.getEpicId());
+        subtasks.put(subtask.getId(), subtask);
         updateEpicStatus(epicId);
+
     }
 
     @Override
     public void updateTask(Task task, int id) {
-        //int id = task.getId();
-        Task savedTask = tasks.get(id);
+
+        final Task savedTask = tasks.get(id);
         if (savedTask == null) {
             return;
         }
-        savedTask.setName(task.getName());
-        savedTask.setDescription(task.getDescription());
+        task.setId(savedTask.getId());
+        task.setStatus(savedTask.getStatus());
+        tasks.put(task.getId(), task);
     }
 
     @Override
@@ -138,24 +146,24 @@ public class InMemoryTaskManager implements TaskManagerInt {
     }
 
     @Override
-    public ArrayList<Epic> getEpics() {
+    public List<Epic> getEpics() {
         //history.addAll(new ArrayList<>(epics.values()));
         return new ArrayList<>(epics.values());
     }
 
     @Override
-    public ArrayList<Task> getTasks() {
+    public List<Task> getTasks() {
         return new ArrayList<>(tasks.values());
     }
 
     @Override
-    public ArrayList<Subtask> getSubtasks() {
+    public List<Subtask> getSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
 
     @Override
-    public ArrayList<Subtask> getEpicSubtasks(int epicId) {
-        ArrayList<Subtask> getSubtasks = new ArrayList<>();
+    public List<Subtask> getEpicSubtasks(int epicId) {
+        List<Subtask> getSubtasks = new ArrayList<>();
         Epic epic = epics.get(epicId);
         if (epic == null) {
             return null;
@@ -168,20 +176,28 @@ public class InMemoryTaskManager implements TaskManagerInt {
 
     @Override
     public Task getTask(int id) {
-        historyManager.addHistory(tasks.get(id));
-        return tasks.get(id);
+        final Task task = tasks.get(id);
+        historyManager.addHistory(task);
+        return task;
     }
 
     @Override
     public Epic getEpic(int id) {
-        historyManager.addHistory(epics.get(id));
-        return epics.get(id);
+        final Epic epic = epics.get(id);
+        historyManager.addHistory(epic);
+        return epic;
     }
 
     @Override
     public Subtask getSubtask(int id) {
-        historyManager.addHistory(subtasks.get(id));
-        return subtasks.get(id);
+        final Subtask subtask = subtasks.get(id);
+        historyManager.addHistory(subtask);
+        return subtask;
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        return new ArrayList<>(historyManager.getHistory());
     }
 
     private void updateEpicStatus(int epicId) {
@@ -214,11 +230,6 @@ public class InMemoryTaskManager implements TaskManagerInt {
             epic.setStatus(Status.NEW);
         }
     }
-
-    public ArrayList<Task> getHistory() {
-        return new ArrayList<>(historyManager.getHistory());
-    }
-
 
 }
 

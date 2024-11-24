@@ -1,8 +1,8 @@
-package ru.yandex.javacource.korolyov.taskManager.manager;
+package ru.yandex.javacource.korolyov.taskmanager.manager;
 
 public class Managers {
 
-    public static InMemoryTaskManager getDefault() {
+    public static TaskManager getDefault() {
         return new InMemoryTaskManager();
     }
 

@@ -2,9 +2,9 @@ package manager;
 
 import org.junit.jupiter.api.Test;
 
-import ru.yandex.javacource.korolyov.taskManager.manager.InMemoryHistoryManager;
-import ru.yandex.javacource.korolyov.taskManager.manager.InMemoryTaskManager;
-import ru.yandex.javacource.korolyov.taskManager.manager.Managers;
+import ru.yandex.javacource.korolyov.taskmanager.manager.InMemoryHistoryManager;
+import ru.yandex.javacource.korolyov.taskmanager.manager.InMemoryTaskManager;
+import ru.yandex.javacource.korolyov.taskmanager.manager.Managers;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,10 +1,11 @@
-package ru.yandex.javacource.korolyov.taskManager.tasks;
+package ru.yandex.javacource.korolyov.taskmanager.tasks;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class Epic extends Task {
 
-    private ArrayList<Integer> subtaskIds = new ArrayList<>();
+    private List<Integer> subtaskIds = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
@@ -14,7 +15,7 @@ public class Epic extends Task {
         subtaskIds.clear();
     }
 
-    public ArrayList<Integer> getSubtaskIds(){
+    public List<Integer> getSubtaskIds(){
         return new ArrayList<>(subtaskIds);
     }
     public void removeSubtaskIds(Integer id){
@@ -22,6 +23,9 @@ public class Epic extends Task {
     }
     public void addSubtaskId(Integer id){
         subtaskIds.add(id);
+    }
+    public void setAllSubtaskId(List<Integer> subs){
+        subtaskIds = subs;
     }
 
 

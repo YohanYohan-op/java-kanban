@@ -1,12 +1,13 @@
-package ru.yandex.javacource.korolyov.taskManager.manager;
+package ru.yandex.javacource.korolyov.taskmanager.manager;
 
-import ru.yandex.javacource.korolyov.taskManager.tasks.Epic;
-import ru.yandex.javacource.korolyov.taskManager.tasks.Subtask;
-import ru.yandex.javacource.korolyov.taskManager.tasks.Task;
+import ru.yandex.javacource.korolyov.taskmanager.tasks.Epic;
+import ru.yandex.javacource.korolyov.taskmanager.tasks.Subtask;
+import ru.yandex.javacource.korolyov.taskmanager.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public interface TaskManagerInt {
+public interface TaskManager {
     Integer addNewEpic(Epic epic);
 
     Integer addNewSubtask(Subtask subtask);
@@ -31,17 +32,19 @@ public interface TaskManagerInt {
 
     void deleteSubtasks();
 
-    ArrayList<Epic> getEpics();
+    List<Epic> getEpics();
 
-    ArrayList<Task> getTasks();
+    List<Task> getTasks();
 
-    ArrayList<Subtask> getSubtasks();
+    List<Subtask> getSubtasks();
 
-    ArrayList<Subtask> getEpicSubtasks(int epicId);
+    List<Subtask> getEpicSubtasks(int epicId);
 
     Task getTask(int id);
 
     Epic getEpic(int id);
 
     Subtask getSubtask(int id);
+
+    List<Task> getHistory();
 }

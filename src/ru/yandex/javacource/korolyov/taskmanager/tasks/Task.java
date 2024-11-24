@@ -1,4 +1,4 @@
-package ru.yandex.javacource.korolyov.taskManager.tasks;
+package ru.yandex.javacource.korolyov.taskmanager.tasks;
 
 import java.util.Objects;
 
