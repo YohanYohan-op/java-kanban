@@ -16,7 +16,6 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Epic> epics = new HashMap<>();
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
     private final HistoryManager historyManager = Managers.getDefaultHistory();
-    //Не могу понять, почему без явного приведения не работает строка выше
     private int generatorId = 0;
 
 
@@ -82,15 +81,15 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateEpic(Epic epic, int id) { //Хоть убей не понимаю, почему ты передаешь только один объект
-        final Epic savedEpic = epics.get(id); // Ведь чтобы заменить объект в мапе нужно ведь два значения или я чего то не понял?
-        if (savedEpic == null) { //Вроде логично, что чтобы заменить нужно передать что и на что происходит замена
-            return; // поправь пожалуйста, если не прав
+    public void updateEpic(Epic epic, int id) {
+        final Epic savedEpic = epics.get(id);
+        if (savedEpic == null) {
+            return;
         }
         epic.setId(savedEpic.getId());
         epic.setStatus(savedEpic.getStatus());
         epic.setAllSubtaskId(savedEpic.getSubtaskIds());
-        epics.put(epic.getId(), epic); //исправил, чтобы обновленная задача сохранялась с новой ссылкой, чтобы в истории осталась старая
+        epics.put(epic.getId(), epic);
     }
 
     @Override
@@ -147,7 +146,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Epic> getEpics() {
-        //history.addAll(new ArrayList<>(epics.values()));
         return new ArrayList<>(epics.values());
     }
 
