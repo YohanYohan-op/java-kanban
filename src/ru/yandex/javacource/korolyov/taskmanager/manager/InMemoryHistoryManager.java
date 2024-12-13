@@ -22,7 +22,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             return;
         }
         for (Node<Task> search : historyNode.list()) {
-            if (search.data == task){
+            if (search.data == task) {
                 historyNode.removeNode(search);
                 historyNode.add(search);
                 history.put(task.getId(), search);
