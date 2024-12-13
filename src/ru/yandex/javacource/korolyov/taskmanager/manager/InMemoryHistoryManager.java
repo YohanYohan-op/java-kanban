@@ -2,7 +2,6 @@ package ru.yandex.javacource.korolyov.taskmanager.manager;
 
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Task;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
