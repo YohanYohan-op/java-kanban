@@ -64,18 +64,18 @@ public class Task {
     @Override
     public int hashCode() {
         int hash = 17;
-        if (name != null){
+        if (name != null) {
             hash = hash + name.hashCode();
         }
         hash = hash * 31;
-        if (description != null){
+        if (description != null) {
             hash = hash + description.hashCode();
         }
         if (status != null) {
             hash = hash + status.hashCode();
         }
         hash = hash * 7;
-        if (id != null){
+        if (id != null) {
             hash = hash + id.hashCode();
         }
         hash = hash * 11;
