@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 //Мега тяжелая тема, реализовал как смог, прошу слишком строго не судить:).
 
-public class DoublyLinkedList<Task> {
-    public Node<Task> head;
-    public Node<Task> tail;
+public class DoublyLinkedList<T> {
+    public Node<T> head;
+    public Node<T> tail;
     private int size = 0;
     private int schet = 0;
 
@@ -23,7 +23,7 @@ public class DoublyLinkedList<Task> {
         return head == null;
     }
 
-    public void add(Node<Task> value) {
+    public void add(Node<T> value) {
         if (isEmpty()) {
             head = value;
             size++;
@@ -36,7 +36,7 @@ public class DoublyLinkedList<Task> {
     }
 
     public void removeLast() {
-        Node<Task> element = tail;
+        Node<T> element = tail;
         if (tail.prev == null) {
             head = null;
             size--;
@@ -47,9 +47,9 @@ public class DoublyLinkedList<Task> {
         tail = tail.prev;
     }
 
-    public ArrayList<Node<Task>> list() {
-        Node<Task> element = head;
-        ArrayList<Node<Task>> ret = new ArrayList<>();
+    public ArrayList<Node<T>> list() {
+        Node<T> element = head;
+        ArrayList<Node<T>> ret = new ArrayList<>();
         while (element != null) {
             ret.add(element);
             element = element.next;
@@ -57,9 +57,9 @@ public class DoublyLinkedList<Task> {
         return ret;
     }
 
-    public ArrayList<Task> getHistor() {
-        Node<Task> element = head;
-        ArrayList<Task> ret = new ArrayList<>();
+    public ArrayList<T> getHistor() {
+        Node<T> element = head;
+        ArrayList<T> ret = new ArrayList<>();
         while (element != null) {
             ret.add(element.data);
             element = element.next;
@@ -67,8 +67,8 @@ public class DoublyLinkedList<Task> {
         return ret;
     }
 
-    public void removeNode(Node<Task> node) {
-        Node<Task> element = head;
+    public void removeNode(Node<T> node) {
+        Node<T> element = head;
         if (node == head) {
             node.prev.next = node.next;
             node.next.prev = node.prev;
