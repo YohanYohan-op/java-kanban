@@ -37,7 +37,7 @@ public class DoublyLinkedList<Task> {
 
     public void removeLast() {
         Node<Task> element = tail;
-        if (tail.prev == null){
+        if (tail.prev == null) {
             head = null;
             size--;
         } else {
@@ -50,7 +50,7 @@ public class DoublyLinkedList<Task> {
     public ArrayList<Node<Task>> list() {
         Node<Task> element = head;
         ArrayList<Node<Task>> ret = new ArrayList<>();
-        while (element!=null){
+        while (element!=null) {
             ret.add(element);
             element = element.next;
         }
@@ -60,7 +60,7 @@ public class DoublyLinkedList<Task> {
     public ArrayList<Task> getHistor() {
         Node<Task> element = head;
         ArrayList<Task> ret = new ArrayList<>();
-        while (element!=null){
+        while (element!=null) {
             ret.add(element.data);
             element = element.next;
         }
@@ -69,15 +69,15 @@ public class DoublyLinkedList<Task> {
 
     public void removeNode(Node<Task> node) {
         Node<Task> element = head;
-        if (node == head){
+        if (node == head) {
             node.prev.next = node.next;
             node.next.prev = node.prev;
             node.data = null;
             size--;
         } else {
-            while (schet != size){
+            while (schet != size) {
                 element = element.next;
-                if (node == element){
+                if (node == element) {
                     node.prev.next = node.next;
                     node.next.prev = node.prev;
                     node.data = null;
