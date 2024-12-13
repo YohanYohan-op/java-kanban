@@ -50,7 +50,7 @@ public class DoublyLinkedList<Task> {
     public ArrayList<Node<Task>> list() {
         Node<Task> element = head;
         ArrayList<Node<Task>> ret = new ArrayList<>();
-        while (element!=null) {
+        while (element != null) {
             ret.add(element);
             element = element.next;
         }
@@ -60,7 +60,7 @@ public class DoublyLinkedList<Task> {
     public ArrayList<Task> getHistor() {
         Node<Task> element = head;
         ArrayList<Task> ret = new ArrayList<>();
-        while (element!=null) {
+        while (element != null) {
             ret.add(element.data);
             element = element.next;
         }
@@ -90,13 +90,13 @@ public class DoublyLinkedList<Task> {
     }
 }
 
-class Node<Task> {
+class Node<T> {
 
-    public Task data;
-    public Node<Task> next;
-    public Node<Task> prev;
+    public T data;
+    public Node<T> next;
+    public Node<T> prev;
 
-    public Node(Task data) {
+    public Node(T data) {
         this.data = data;
         this.next = null;
         this.prev = null;
