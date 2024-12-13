@@ -2,7 +2,7 @@ package ru.yandex.javacource.korolyov.taskmanager.manager;
 
 import java.util.ArrayList;
 
-//Мега тяжелая тема, реализовал как смог, прошу слишком строго не судить:).
+//Мега тяжелая тема, реализовал как смог, Не могу понять - почему не работает, подскажи пожалуйста
 
 public class DoublyLinkedList<T> {
     public Node<T> head;
