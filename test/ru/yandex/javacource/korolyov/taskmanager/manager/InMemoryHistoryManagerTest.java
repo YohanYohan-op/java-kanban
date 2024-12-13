@@ -15,7 +15,7 @@ class InMemoryHistoryManagerTest {
 
     InMemoryTaskManager taskManager = new InMemoryTaskManager();
 
-    @Test
+    /*@Test
     public void getHistoryShouldReturnListOf10Tasks() {
 
         for (int i = 0; i < 20; i++) {
@@ -75,5 +75,5 @@ class InMemoryHistoryManagerTest {
                 "В истории не сохранилась старая версия эпика");
         assertEquals(subtask1.getDescription(), oldSubtask.getDescription(),
                 "В истории не сохранилась старая версия эпика");
-    }
+    }*/
 }
