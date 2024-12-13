@@ -3,16 +3,18 @@ package ru.yandex.javacource.korolyov.taskmanager.manager;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    public static final int MAX_SIZE = 10;
-    private final List<Task> history = new ArrayList<>();
+    private final DoublyLinkedList<Task> historyNode = new DoublyLinkedList<>();
+    private final Map<Integer, Node<Task>> history = new HashMap<>();
 
     @Override
     public List<Task> getHistory() {
-        return history;
+        return historyNode.getHistor();
     }
 
     @Override
@@ -20,10 +22,18 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (task == null) {
             return;
         }
-        if (history.size() == MAX_SIZE) {
-            history.removeFirst();
+        for (Node<Task> search : historyNode.list()){
+            if (search.data == task){
+                historyNode.removeNode(search);
+                historyNode.add(search);
+                history.put(task.getId(), search);
+            }
         }
-        history.add(task);
     }
 
+    @Override
+    public void remove(int id) {
+        historyNode.removeNode(history.get(id));
+        history.remove(id);
+    }
 }
