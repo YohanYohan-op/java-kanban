@@ -10,20 +10,20 @@ public class DoublyLinkedList<Task> {
     private int size = 0;
     private int schet = 0;
 
-    public DoublyLinkedList(){
+    public DoublyLinkedList() {
         this.head = null;
         this.tail = null;
     }
 
-    public int getSize(){
+    public int getSize() {
         return size;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return head == null;
     }
 
-    public void add(Node<Task> value){
+    public void add(Node<Task> value) {
         if (isEmpty()) {
             head = value;
             size++;
@@ -35,7 +35,7 @@ public class DoublyLinkedList<Task> {
         tail = value;
     }
 
-    public void removeLast(){
+    public void removeLast() {
         Node<Task> element = tail;
         if (tail.prev == null){
             head = null;
@@ -47,7 +47,7 @@ public class DoublyLinkedList<Task> {
         tail = tail.prev;
     }
 
-    public ArrayList<Node<Task>> list(){
+    public ArrayList<Node<Task>> list() {
         Node<Task> element = head;
         ArrayList<Node<Task>> ret = new ArrayList<>();
         while (element!=null){
@@ -57,7 +57,7 @@ public class DoublyLinkedList<Task> {
         return ret;
     }
 
-    public ArrayList<Task> getHistor(){
+    public ArrayList<Task> getHistor() {
         Node<Task> element = head;
         ArrayList<Task> ret = new ArrayList<>();
         while (element!=null){
@@ -67,7 +67,7 @@ public class DoublyLinkedList<Task> {
         return ret;
     }
 
-    public void removeNode(Node<Task> node){
+    public void removeNode(Node<Task> node) {
         Node<Task> element = head;
         if (node == head){
             node.prev.next = node.next;
