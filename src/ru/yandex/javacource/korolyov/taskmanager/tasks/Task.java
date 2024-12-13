@@ -68,10 +68,10 @@ public class Task {
             hash = hash + name.hashCode();
         }
         hash = hash * 31;
-        if(description != null){
+        if (description != null){
             hash = hash + description.hashCode();
         }
-        if(status != null) {
+        if (status != null) {
             hash = hash + status.hashCode();
         }
         hash = hash * 7;
@@ -88,7 +88,7 @@ public class Task {
         return "Задача {" +
                 "name='" + name + '\'' +
                 ", annotation='" + description + '\'' +
-                ", status='"+status +'\''+
+                ", status='" + status + '\'' +
                 ", id=" + id + '}';
     }
 }
