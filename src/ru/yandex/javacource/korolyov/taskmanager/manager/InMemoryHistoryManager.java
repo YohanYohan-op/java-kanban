@@ -80,6 +80,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 }
+
 class Node {
 
     public Task data;

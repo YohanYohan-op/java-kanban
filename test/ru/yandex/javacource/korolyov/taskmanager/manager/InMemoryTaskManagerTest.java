@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class InMemoryTaskManagerTest {
 
     @Test
-    public void AnyTasksShouldBeAddedToListsAndGotBack(){
+    public void AnyTasksShouldBeAddedToListsAndGotBack() {
         InMemoryTaskManager taskManager = new InMemoryTaskManager();
         taskManager.addNewTask(new Task("1", "1"));
         taskManager.addNewTask(new Task("1", "2"));
@@ -22,7 +22,7 @@ class InMemoryTaskManagerTest {
         taskManager.addNewSubtask(new Subtask("2.2", "2.2", 4));
 
         assertEquals(taskManager.getTask(2).getDescription(), "2",
-              "Ошибка! input и output не совпадают");
+                "Ошибка! input и output не совпадают");
 
         assertEquals(taskManager.getEpic(4).getDescription(), "2.0",
                 "Ошибка! input и output не совпадают");
