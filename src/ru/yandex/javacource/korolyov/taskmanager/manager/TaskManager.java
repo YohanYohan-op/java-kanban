@@ -3,8 +3,6 @@ package ru.yandex.javacource.korolyov.taskmanager.manager;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Epic;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Subtask;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Task;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
