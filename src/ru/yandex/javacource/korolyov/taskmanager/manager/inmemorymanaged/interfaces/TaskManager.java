@@ -1,4 +1,4 @@
-package ru.yandex.javacource.korolyov.taskmanager.manager;
+package ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged.interfaces;
 
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Epic;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Subtask;
@@ -10,7 +10,7 @@ public interface TaskManager {
 
     Integer addNewSubtask(Subtask subtask);
 
-    int addNewTask(Task task);
+    Integer addNewTask(Task task);
 
     void deleteSubTask(int subtaskId);
 

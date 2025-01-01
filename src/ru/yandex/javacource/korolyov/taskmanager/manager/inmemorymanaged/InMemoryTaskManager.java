@@ -1,5 +1,8 @@
-package ru.yandex.javacource.korolyov.taskmanager.manager;
+package ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged;
 
+import ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged.interfaces.HistoryManager;
+import ru.yandex.javacource.korolyov.taskmanager.manager.Managers;
+import ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged.interfaces.TaskManager;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Epic;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Status;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Subtask;
@@ -43,7 +46,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public int addNewTask(Task task) {
+    public Integer addNewTask(Task task) {
         int id = ++generatorId;
         task.setId(id);
         tasks.put(id, task);
