@@ -25,6 +25,10 @@ public class Task {
         this.id = id;
     }
 
+    public TaskTypes getType() {
+        return TaskTypes.TASK;
+    }
+
     public String getName() {
         return name;
     }

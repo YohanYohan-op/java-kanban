@@ -15,6 +15,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -92,11 +93,12 @@ class FileBackedTaskManagerTest {
     @Test
     void shouldLoadTasksFromFile() throws IOException {
         // Запишем задачи в файл вручную
+        tempFile = File.createTempFile("fba", ".txt");
         writeToFile("1,TASK,Задача 1,NEW,Описание задачи 1");
         writeToFile("2,EPIC,Эпик 1,NEW,Описание эпика 1");
         writeToFile("3,SUBTASK,Подзадача 1,IN_PROGRESS,Описание подзадачи 1,2");
 
-        manager.loadFromFile();
+        manager = FileBackedTaskManager.loadFromFile(tempFile);
 
         List<Task> tasks = manager.getTasks();
         List<Epic> epics = manager.getEpics();
@@ -137,11 +139,11 @@ class FileBackedTaskManagerTest {
         return stringsFromFile;
     }
 
-    private void writeToFile(String content) throws IOException {
+    private void writeToFile(String content) {
         try (FileWriter writer = new FileWriter(tempFile, StandardCharsets.UTF_8, true)) {
             writer.write(content + "\n");
         } catch (IOException e) {
-            throw new ManagerSaveException("Не удалось сохранить в файл");
+            throw new ManagerSaveException("Не удалось сохранить в файл", e);
         }
     }
 }

@@ -3,7 +3,9 @@ package ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged.interf
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Epic;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Subtask;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Task;
+
 import java.util.List;
+import java.util.Map;
 
 public interface TaskManager {
     Integer addNewEpic(Epic epic);
