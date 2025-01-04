@@ -201,7 +201,7 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(historyManager.getHistory());
     }
 
-    private void updateEpicStatus(int epicId) {
+    protected void updateEpicStatus(int epicId) {
         Epic epic = epics.get(epicId);
         ArrayList<Subtask> statusChek = new ArrayList<>();
         int doneStatus = 0;

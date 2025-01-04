@@ -37,6 +37,66 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return id;
     }
 
+    @Override
+    public void deleteSubTask(int subtaskId) {
+        super.deleteSubTask(subtaskId);
+        save();
+    }
+
+    @Override
+    public void deleteTask(int id) {
+        super.deleteTask(id);
+        save();
+    }
+
+    @Override
+    public void deleteEpic(int id) {
+        super.deleteEpic(id);
+        save();
+    }
+
+    @Override
+    public void updateEpic(Epic epic, int id) {
+        super.updateEpic(epic, id);
+        save();
+    }
+
+    @Override
+    public void updateSubTask(Subtask subtask, int id) {
+        super.updateSubTask(subtask, id);
+        save();
+    }
+
+    @Override
+    public void updateTask(Task task, int id) {
+        super.updateTask(task, id);
+        save();
+    }
+
+    @Override
+    public void deleteTasks() {
+        super.deleteTasks();
+        save();
+    }
+
+    @Override
+    public void deleteEpics() {
+        super.deleteEpics();
+        save();
+    }
+
+    @Override
+    public void deleteSubtasks() {
+        super.deleteSubtasks();
+        save();
+    }
+
+    @Override
+    protected void updateEpicStatus(int epicId) {
+        super.updateEpicStatus(epicId);
+        save();
+    }
+
     public static FileBackedTaskManager loadFromFile(File file) {
         final FileBackedTaskManager taskManager = new FileBackedTaskManager(file);
         taskManager.generatorId = 0;
@@ -65,23 +125,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public static String toString(Task task) {
         return task.getId() + "," + task.getType() + "," + task.getName() + "," + task.getStatus() + "," + task.getDescription()
                 + "," + (task.getType().equals(TaskTypes.SUBTASK) ? ((Subtask) task).getEpicId() : "");
-    }
-
-    private static Task fromString(String value) {
-        final String[] values = value.split(",");
-        final int id = Integer.parseInt(values[0]);
-        final TaskTypes type = TaskTypes.valueOf(values[1]);
-        final String name = values[2];
-        final Status status = Status.valueOf(values[3]);
-        final String description = values[4];
-        if (type == TaskTypes.TASK) {
-            return new Task(name, description, id, status);
-        }
-        if (type == TaskTypes.SUBTASK) {
-            final int epicId = Integer.parseInt(values[5]);
-            return new Subtask(name, description, id, epicId, status);
-        }
-        return new Epic(name, description, id, status);
     }
 
     protected void save() {
@@ -130,5 +173,22 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 generatorId++;
                 break;
         }
+    }
+
+    private static Task fromString(String value) {
+        final String[] values = value.split(",");
+        final int id = Integer.parseInt(values[0]);
+        final TaskTypes type = TaskTypes.valueOf(values[1]);
+        final String name = values[2];
+        final Status status = Status.valueOf(values[3]);
+        final String description = values[4];
+        if (type == TaskTypes.TASK) {
+            return new Task(name, description, id, status);
+        }
+        if (type == TaskTypes.SUBTASK) {
+            final int epicId = Integer.parseInt(values[5]);
+            return new Subtask(name, description, id, epicId, status);
+        }
+        return new Epic(name, description, id, status);
     }
 }
