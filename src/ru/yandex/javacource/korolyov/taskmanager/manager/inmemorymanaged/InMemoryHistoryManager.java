@@ -1,5 +1,7 @@
-package ru.yandex.javacource.korolyov.taskmanager.manager;
+package ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged;
 
+import ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged.interfaces.HistoryManager;
+import ru.yandex.javacource.korolyov.taskmanager.manager.Node;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Task;
 
 import java.util.ArrayList;

@@ -11,6 +11,14 @@ public class Epic extends Task {
         super(name, description);
     }
 
+    public TaskTypes getType() {
+        return TaskTypes.EPIC;
+    }
+
+    public Epic(String name, String description, Integer id, Status status) {
+        super(name, description, id, status);
+    }
+
     public void cleanSubtaskIds() {
         subtaskIds.clear();
     }
