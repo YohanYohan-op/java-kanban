@@ -84,21 +84,20 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateEpic(Epic epic, int id) {
-        final Epic savedEpic = epics.get(id);
+    public void updateEpic(Epic epic) {
+        final Epic savedEpic = epics.get(epic.getId());
         if (savedEpic == null) {
             return;
         }
-        epic.setId(savedEpic.getId());
-        epic.setStatus(savedEpic.getStatus());
         epic.setAllSubtaskId(savedEpic.getSubtaskIds());
+        epic.setStatus(savedEpic.getStatus());
         epics.put(epic.getId(), epic);
     }
 
     @Override
-    public void updateSubTask(Subtask subtask, int id) {
+    public void updateSubTask(Subtask subtask) {
 
-        final Subtask savedSubtask = subtasks.get(id);
+        final Subtask savedSubtask = subtasks.get(subtask.getId());
         if (savedSubtask == null) {
             return;
         }
@@ -116,9 +115,9 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(Task task, int id) {
+    public void updateTask(Task task) {
 
-        final Task savedTask = tasks.get(id);
+        final Task savedTask = tasks.get(task.getId());
         if (savedTask == null) {
             return;
         }
@@ -201,7 +200,7 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(historyManager.getHistory());
     }
 
-    protected void updateEpicStatus(int epicId) {
+    private void updateEpicStatus(int epicId) {
         Epic epic = epics.get(epicId);
         ArrayList<Subtask> statusChek = new ArrayList<>();
         int doneStatus = 0;

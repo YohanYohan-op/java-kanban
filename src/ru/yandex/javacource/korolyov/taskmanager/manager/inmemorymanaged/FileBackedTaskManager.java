@@ -56,20 +56,20 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void updateEpic(Epic epic, int id) {
-        super.updateEpic(epic, id);
+    public void updateEpic(Epic epic) {
+        super.updateEpic(epic);
         save();
     }
 
     @Override
-    public void updateSubTask(Subtask subtask, int id) {
-        super.updateSubTask(subtask, id);
+    public void updateSubTask(Subtask subtask) {
+        super.updateSubTask(subtask);
         save();
     }
 
     @Override
-    public void updateTask(Task task, int id) {
-        super.updateTask(task, id);
+    public void updateTask(Task task) {
+        super.updateTask(task);
         save();
     }
 
@@ -88,12 +88,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     @Override
     public void deleteSubtasks() {
         super.deleteSubtasks();
-        save();
-    }
-
-    @Override
-    protected void updateEpicStatus(int epicId) {
-        super.updateEpicStatus(epicId);
         save();
     }
 
