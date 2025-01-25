@@ -1,5 +1,8 @@
 package ru.yandex.javacource.korolyov.taskmanager.tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Subtask extends Task {
 
     private Integer epicId;
@@ -9,15 +12,24 @@ public class Subtask extends Task {
         this.epicId = epicId;
     }
 
-    public Subtask(String name, String description, Integer id, Integer epicId, Status status) {
-        super(name, description, id, status);
+    public Subtask(String name, String description, Integer id, Integer epicId, Status status, LocalDateTime startTime) {
+        super(name, description, id, status, startTime);
+        this.epicId = epicId;
+    }
+
+    public Subtask(String name, String description, Integer epicId, Status status, Duration duration, LocalDateTime startTime) {
+        super(name, description, status, duration, startTime);
+        this.epicId = epicId;
+    }
+
+    public Subtask(String name, String description, Integer id, Integer epicId, Status status, Duration duration, LocalDateTime startTime) {
+        super(name, description, id, status, duration, startTime);
         this.epicId = epicId;
     }
 
     public TaskTypes getType() {
         return TaskTypes.SUBTASK;
     }
-
 
     public Integer getEpicId() {
         return epicId;
