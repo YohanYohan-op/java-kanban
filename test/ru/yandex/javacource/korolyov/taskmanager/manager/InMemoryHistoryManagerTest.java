@@ -2,11 +2,14 @@ package ru.yandex.javacource.korolyov.taskmanager.manager;
 
 
 import org.junit.jupiter.api.Test;
+import ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged.FileBackedTaskManager;
 import ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged.interfaces.TaskManager;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Subtask;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Task;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Epic;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,7 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InMemoryHistoryManagerTest {
 
-    TaskManager taskManager = Managers.getDefault();
+    TaskManager taskManager = new FileBackedTaskManager(File.createTempFile("fba", ".txt"));
+
+    InMemoryHistoryManagerTest() throws IOException {
+    }
 
     @Test
     public void getHistoryShouldReturnListOf10Tasks() {

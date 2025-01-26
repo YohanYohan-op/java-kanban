@@ -1,6 +1,7 @@
 package ru.yandex.javacource.korolyov.taskmanager.manager;
 
 import org.junit.jupiter.api.Test;
+import ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged.FileBackedTaskManager;
 import ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged.exceptions.IntersectionException;
 import ru.yandex.javacource.korolyov.taskmanager.manager.inmemorymanaged.interfaces.TaskManager;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Epic;
@@ -8,6 +9,8 @@ import ru.yandex.javacource.korolyov.taskmanager.tasks.Status;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Subtask;
 import ru.yandex.javacource.korolyov.taskmanager.tasks.Task;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +18,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TaskManagerTest {
-    protected TaskManager taskManager = Managers.getDefault();
+    protected TaskManager taskManager = new FileBackedTaskManager(File.createTempFile("fba", ".txt"));
+
+    TaskManagerTest() throws IOException {
+    }
 
     @Test
     void shouldBeCreatedTask() {
