@@ -126,33 +126,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
 
-    private static Task fromString(String value) {
-        final String[] values = value.split(",");
-        final int id = Integer.parseInt(values[0]);
-        final TaskTypes type = TaskTypes.valueOf(values[1]);
-        final String name = values[2];
-        final Status status = Status.valueOf(values[3]);
-        final String description = values[4];
-        if (type == TaskTypes.TASK) {
-            if (values.length == 6) {
-                return new Task(name, description, id, status, LocalDateTime.parse(values[5]));
-            }
-            return new Task(name, description, id, status, Duration.ofMinutes(Long.parseLong(values[5])), LocalDateTime.parse(values[6]));
-        }
-        if (type == TaskTypes.SUBTASK) {
-            final int epicId = Integer.parseInt(values[5]);
-            if (values.length == 7) {
-                return new Subtask(name, description, id, epicId, status, LocalDateTime.parse(values[6]));
-            }
-            return new Subtask(name, description, id, epicId, status, Duration.ofMinutes(Long.parseLong(values[6])), LocalDateTime.parse(values[7]));
-        }
-        if (values.length == 6) {
-            return new Epic(name, description, id, status, LocalDateTime.parse(values[5]));
-        }
-        return new Epic(name, description, id, status, Duration.ofMinutes(Long.parseLong(values[5])), LocalDateTime.parse(values[6]));
-
-    }
-
     protected void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(HEADER);
@@ -211,12 +184,22 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         final Status status = Status.valueOf(values[3]);
         final String description = values[4];
         if (type == TaskTypes.TASK) {
-            return new Task(name, description, id, status);
+            if (values.length == 6) {
+                return new Task(name, description, id, status, LocalDateTime.parse(values[5]));
+            }
+            return new Task(name, description, id, status, Duration.ofMinutes(Long.parseLong(values[5])), LocalDateTime.parse(values[6]));
         }
         if (type == TaskTypes.SUBTASK) {
             final int epicId = Integer.parseInt(values[5]);
-            return new Subtask(name, description, id, epicId, status);
+            if (values.length == 7) {
+                return new Subtask(name, description, id, epicId, status, LocalDateTime.parse(values[6]));
+            }
+            return new Subtask(name, description, id, epicId, status, Duration.ofMinutes(Long.parseLong(values[6])), LocalDateTime.parse(values[7]));
         }
-        return new Epic(name, description, id, status);
+        if (values.length == 6) {
+            return new Epic(name, description, id, status, LocalDateTime.parse(values[5]));
+        }
+        return new Epic(name, description, id, status, Duration.ofMinutes(Long.parseLong(values[5])), LocalDateTime.parse(values[6]));
+
     }
 }

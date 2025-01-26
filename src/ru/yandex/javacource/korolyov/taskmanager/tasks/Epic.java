@@ -15,6 +15,10 @@ public class Epic extends Task {
         super(name, description);
     }
 
+    public Epic(String name, String description, LocalDateTime startTime) {
+        super(name, description, startTime);
+    }
+
     public TaskTypes getType() {
         return TaskTypes.EPIC;
     }
