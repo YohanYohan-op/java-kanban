@@ -20,8 +20,8 @@ public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Subtask> subtasks = new HashMap<>();
     protected final HistoryManager historyManager = Managers.getDefaultHistory();
     protected int generatorId = 0;
-    private final Comparator<Task> taskComparator = Comparator.comparing(Task::getStartTime);
-    protected Set<Task> prioritizedTasks = new TreeSet<>(taskComparator);
+    private final static Comparator<Task> taskComparator = Comparator.comparing(Task::getStartTime);
+    protected final Set<Task> prioritizedTasks = new TreeSet<>(taskComparator);
 
 
     @Override
@@ -50,7 +50,7 @@ public class InMemoryTaskManager implements TaskManager {
             addToPrioritizedTasks(subtask);
             return id;
         } else {
-            throw new IntersectionException("Найдено пересечение во времени");
+            throw new IntersectionException("Найдено пересечение во времени" + subtask.getStartTime().toString());
         }
     }
 
@@ -63,7 +63,7 @@ public class InMemoryTaskManager implements TaskManager {
             addToPrioritizedTasks(task);
             return id;
         } else {
-            throw new IntersectionException("Найдено пересечение во времени");
+            throw new IntersectionException("Найдено пересечение во времени" + task.getStartTime().toString());
         }
     }
 
