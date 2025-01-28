@@ -20,7 +20,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Subtask> subtasks = new HashMap<>();
     protected final HistoryManager historyManager = Managers.getDefaultHistory();
     protected int generatorId = 0;
-    private final static Comparator<Task> taskComparator = Comparator.comparing(Task::getStartTime);
+    private static final Comparator<Task> taskComparator = Comparator.comparing(Task::getStartTime);
     protected final Set<Task> prioritizedTasks = new TreeSet<>(taskComparator);
 
 
