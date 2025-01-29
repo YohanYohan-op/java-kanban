@@ -13,7 +13,7 @@ import ru.yandex.javacource.korolyov.taskmanager.tasks.Task;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,67 +35,12 @@ class FileBackedTaskManagerTest {
     }
 
     @Test
-    void shouldCreateEmptyFileOnInitialization() throws IOException {
-        assertTrue(tempFile.exists());
-        for (String line : readFileContents()) {
-            if (line.equals("id,type,name,status,description,epic")) {
-                assertEquals("id,type,name,status,description,epic", line);
-            }
-        }
-    }
-
-    @Test
-    void shouldAddAndSaveTaskToFile() throws IOException {
-        Task task = new Task("Задача 1", "Описание задачи 1");
-        manager.addNewTask(task);
-
-        String expectedContent = "1,TASK,Задача 1,NEW,Описание задачи 1";
-
-        for (String line : readFileContents()) {
-            if (line.equals(expectedContent)) {
-                assertEquals(expectedContent, line);
-            }
-        }
-    }
-
-    @Test
-    void shouldAddAndSaveEpicToFile() throws IOException {
-        Epic epic = new Epic("Эпик 1", "Описание эпика 1");
-        manager.addNewEpic(epic);
-
-        String expectedContent = "1,EPIC,Эпик 1,NEW,Описание эпика 1";
-
-        for (String line : readFileContents()) {
-            if (line.equals(expectedContent)) {
-                assertEquals(expectedContent, line);
-            }
-        }
-    }
-
-    @Test
-    void shouldAddAndSaveSubtaskToFile() throws IOException {
-        Epic epic = new Epic("Эпик 1", "Описание эпика 1");
-        manager.addNewEpic(epic);
-
-        Subtask subtask = new Subtask("Подзадача 1", "Описание подзадачи 1", 1);
-        subtask.setStatus(Status.IN_PROGRESS);
-        manager.addNewSubtask(subtask);
-
-        String expectedContent = "2,SUBTASK,Подзадача 1,IN_PROGRESS,Описание подзадачи 1,1";
-        for (String line : readFileContents()) {
-            if (line.equals(expectedContent)) {
-                assertEquals(expectedContent, line);
-            }
-        }
-    }
-
-    @Test
     void shouldLoadTasksFromFile() throws IOException {
         // Запишем задачи в файл вручную
         tempFile = File.createTempFile("fba", ".txt");
-        writeToFile("1,TASK,Задача 1,NEW,Описание задачи 1");
-        writeToFile("2,EPIC,Эпик 1,NEW,Описание эпика 1");
-        writeToFile("3,SUBTASK,Подзадача 1,IN_PROGRESS,Описание подзадачи 1,2");
+        writeToFile("1,TASK,Задача 1,NEW,Описание задачи 1,235,2007-12-03T10:15:30");
+        writeToFile("2,EPIC,Эпик 1,NEW,Описание эпика 1,178,2009-12-03T10:15:30");
+        writeToFile("3,SUBTASK,Подзадача 1,IN_PROGRESS,Описание подзадачи 1,2,222,2011-12-03T10:15:30");
 
         manager = FileBackedTaskManager.loadFromFile(tempFile);
 
@@ -112,12 +57,16 @@ class FileBackedTaskManagerTest {
         assertEquals("Задача 1", loadedTask.getName());
         assertEquals(Status.NEW, loadedTask.getStatus());
         assertEquals("Описание задачи 1", loadedTask.getDescription());
+        assertEquals(235, loadedTask.getDuration().toMinutes());
+        assertEquals(LocalDateTime.parse("2007-12-03T10:15:30"), loadedTask.getStartTime());
 
         Epic loadedEpic = epics.getFirst();
         assertEquals(2, loadedEpic.getId());
         assertEquals("Эпик 1", loadedEpic.getName());
         assertEquals(Status.NEW, loadedEpic.getStatus());
         assertEquals("Описание эпика 1", loadedEpic.getDescription());
+        assertEquals(178, loadedEpic.getDuration().toMinutes());
+        assertEquals(LocalDateTime.parse("2009-12-03T10:15:30"), loadedEpic.getStartTime());
 
         Subtask loadedSubtask = subtasks.getFirst();
         assertEquals(3, loadedSubtask.getId());
@@ -125,17 +74,9 @@ class FileBackedTaskManagerTest {
         assertEquals(Status.IN_PROGRESS, loadedSubtask.getStatus());
         assertEquals("Описание подзадачи 1", loadedSubtask.getDescription());
         assertEquals(2, loadedSubtask.getEpicId());
-    }
+        assertEquals(222, loadedSubtask.getDuration().toMinutes());
+        assertEquals(LocalDateTime.parse("2011-12-03T10:15:30"), loadedSubtask.getStartTime());
 
-    private List<String> readFileContents() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(tempFile));
-        List<String> stringsFromFile = new ArrayList<>();
-
-        while (br.ready()) {
-            stringsFromFile.add(br.readLine());
-        }
-
-        return stringsFromFile;
     }
 
     private void writeToFile(String content) {

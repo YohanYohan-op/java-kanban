@@ -5,11 +5,13 @@ import ru.yandex.javacource.korolyov.taskmanager.tasks.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
-    private static final String HEADER = "id,type,name,status,description,epic";
+    private static final String HEADER = "id,type,name,status,description,epic,duration,startTime";
     private File file;
 
     public FileBackedTaskManager(File file) {
@@ -118,8 +120,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public static String toString(Task task) {
         return task.getId() + "," + task.getType() + "," + task.getName() + "," + task.getStatus() + "," + task.getDescription()
-                + "," + (task.getType().equals(TaskTypes.SUBTASK) ? ((Subtask) task).getEpicId() : "");
+                + "," + (task.getType().equals(TaskTypes.SUBTASK) ? ((Subtask) task).getEpicId() : "") + ","
+                + (task.getDuration().isZero() ? "" : String.valueOf(task.getDuration().toMinutes()))
+                + "," + task.getStartTime();
     }
+
 
     protected void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
@@ -156,10 +161,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         switch (task.getType()) {
             case TASK:
                 tasks.put(id, task);
+                addToPrioritizedTasks(task);
                 generatorId++;
                 break;
             case SUBTASK:
                 subtasks.put(id, (Subtask) task);
+                addToPrioritizedTasks(task);
                 generatorId++;
                 break;
             case EPIC:
@@ -177,12 +184,22 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         final Status status = Status.valueOf(values[3]);
         final String description = values[4];
         if (type == TaskTypes.TASK) {
-            return new Task(name, description, id, status);
+            if (values.length == 6) {
+                return new Task(name, description, id, status, LocalDateTime.parse(values[5]));
+            }
+            return new Task(name, description, id, status, Duration.ofMinutes(Long.parseLong(values[5])), LocalDateTime.parse(values[6]));
         }
         if (type == TaskTypes.SUBTASK) {
             final int epicId = Integer.parseInt(values[5]);
-            return new Subtask(name, description, id, epicId, status);
+            if (values.length == 7) {
+                return new Subtask(name, description, id, epicId, status, LocalDateTime.parse(values[6]));
+            }
+            return new Subtask(name, description, id, epicId, status, Duration.ofMinutes(Long.parseLong(values[6])), LocalDateTime.parse(values[7]));
         }
-        return new Epic(name, description, id, status);
+        if (values.length == 6) {
+            return new Epic(name, description, id, status, LocalDateTime.parse(values[5]));
+        }
+        return new Epic(name, description, id, status, Duration.ofMinutes(Long.parseLong(values[5])), LocalDateTime.parse(values[6]));
+
     }
 }

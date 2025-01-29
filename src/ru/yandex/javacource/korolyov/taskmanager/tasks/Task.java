@@ -1,5 +1,7 @@
 package ru.yandex.javacource.korolyov.taskmanager.tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -10,6 +12,10 @@ public class Task {
     private Status status;
     private Integer id;
 
+    private LocalDateTime startTime;
+
+    private Duration duration;
+
     public Task(String name, String description) {
 
         this.name = name;
@@ -17,12 +23,67 @@ public class Task {
         this.status = Status.NEW;
     }
 
-    public Task(String name, String description, Integer id, Status status) {
+    public Task(String name, String description, LocalDateTime startTime) {
+
+        this.name = name;
+        this.description = description;
+        this.status = Status.NEW;
+        this.startTime = startTime;
+    }
+
+    public Task(String name, String description, Integer id, Status status, LocalDateTime startTime) {
 
         this.name = name;
         this.description = description;
         this.status = status;
         this.id = id;
+        this.startTime = startTime;
+    }
+
+    public Task(String name, String description, Status status, Duration duration, LocalDateTime startTime) {
+
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
+    }
+
+    public Task(String name, String description, Integer id, Status status, Duration duration, LocalDateTime startTime) {
+
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.id = id;
+        this.startTime = startTime;
+        this.duration = duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public Duration getDuration() {
+        if (duration != null) {
+            return duration;
+        } else {
+            return Duration.ofMinutes(0);
+        }
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        if (duration == null) {
+            return startTime;
+        }
+        return startTime.plus(duration);
     }
 
     public TaskTypes getType() {
@@ -97,10 +158,13 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Задача {" +
-                "name='" + name + '\'' +
-                ", annotation='" + description + '\'' +
-                ", status='" + status + '\'' +
-                ", id=" + id + '}';
+        return "Task{" +
+                "id =" + id +
+                ", name ='" + name + '\'' +
+                ", description ='" + description + '\'' +
+                ", status =" + status + '\'' +
+                ", startTime =" + startTime + '\'' +
+                ", Duration=" + duration.toMinutes() + '\'' +
+                '}';
     }
 }
